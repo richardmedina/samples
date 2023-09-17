@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AspNetMvc.Web.Data;
 using AspNetMvc.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
-namespace AspNetMvc.Web
+namespace AspNetMvc.Web.Controllers
 {
+    [Authorize]
     public class LeadsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,9 +24,9 @@ namespace AspNetMvc.Web
         // GET: Leads
         public async Task<IActionResult> Index()
         {
-              return _context.SalesLead != null ? 
-                          View(await _context.SalesLead.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.SalesLead'  is null.");
+            return _context.SalesLead != null ?
+                        View(await _context.SalesLead.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.SalesLead'  is null.");
         }
 
         // GET: Leads/Details/5
@@ -150,14 +152,14 @@ namespace AspNetMvc.Web
             {
                 _context.SalesLead.Remove(salesLeadEntity);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SalesLeadEntityExists(long id)
         {
-          return (_context.SalesLead?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SalesLead?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
