@@ -12,5 +12,6 @@ namespace AspNetMvc.Web.Data
         }
 
         public DbSet<SalesLeadEntity> SalesLead { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }
